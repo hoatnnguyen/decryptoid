@@ -1,0 +1,48 @@
+@import url('https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&display=swap');
+
+.App {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center;
+}
+
+body {
+  background: #E6E2FF;
+  font-family: 'Alegreya', serif;
+  font-weight: 300;
+  line-height: 1.45;
+  color: #0F1108;
+  /* background: linear-gradient(to right, #243449, #205578); */
+}
+
+.btn-login {
+  font-size: 0.9rem;
+  letter-spacing: 0.05rem;
+  padding: 0.75rem 1rem;
+}
+
+a {
+  text-decoration: none;
+}
+
+.signin-btn {
+  background-color: transparent;
+  border: none;
+}
+
+.signin-btn:hover {
+  background-color: #8ECACC;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.signin-link {
+  color: black;
+}
+
+.navbar {
+  height: 60px;
+  background-color: white;
+}
+
