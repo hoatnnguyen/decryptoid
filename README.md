@@ -23,7 +23,7 @@ Make sure Docker is installed. You can download & install Docker Desktop from [h
 1. Clone the repository:
 
 ```bash
-git clone
+git clone https://github.com/hoatnnguyen/decryptoid
 ```
 
 2. Navigate into the decryptoid directory:
