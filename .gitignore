@@ -319,3 +319,5 @@ dmypy.json
 cython_debug/
 .DS_Store
 ./statics
+
+./server/*.db
