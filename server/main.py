@@ -61,7 +61,7 @@ async def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
 
 # @app.post("/cipheractivity", response_model=schemas.CipherActivityResponse)
 @app.post("/cipheractivity/file")
-async def cipherActivity(file: UploadFile = File(...), cipherAlgo: int = Form(...), key: str = Form(...), cipherMode: int = Form(...), accessToken: str = Form(None), db: Session = Depends(get_db)):
+async def cipherActivity(file: UploadFile = File(...), cipherAlgo: int = Form(...), key: str = Form(...), cipherMode: int = Form(...), user_id=Depends(RequiredLogin()), db: Session = Depends(get_db)):
 
     contents = ""
 
@@ -69,7 +69,6 @@ async def cipherActivity(file: UploadFile = File(...), cipherAlgo: int = Form(..
     print(f"cipher algo: {cipherAlgo}")
     print(f"key: {key}")
     print(f"cipherMode : {cipherMode}")
-    print(f"accessToken : {accessToken}")
     if file:
         print(f"File name: {file.filename}")
         content = await file.read()
@@ -106,17 +105,15 @@ async def cipherActivity(file: UploadFile = File(...), cipherAlgo: int = Form(..
         else:
             output = rc4_decrypt(contents, key)
 
-    if accessToken is not None and accessToken != "null":
-        user_id = get_current_user_id(accessToken)
-        print(f"user_id: {user_id}")
-        db_cipher_activity = crud.create_cipher_activity(db, contents, cipher_algo_arr[cipherAlgo-1], cipher_mode_arr[cipherMode-1], key, user_id)
-        print(f"cipher_activity: {db_cipher_activity}")
+    print(f"user_id: {user_id}")
+    db_cipher_activity = crud.create_cipher_activity(db, contents, cipher_algo_arr[cipherAlgo-1], cipher_mode_arr[cipherMode-1], key, user_id)
+    print(f"cipher_activity: {db_cipher_activity}")
 
     print(f"output: {output}")
     return output
 
 @app.post("/cipheractivity/inputText")
-async def cipherActivity(inputText: str = Form(...), cipherAlgo: int = Form(...), key: str = Form(...), cipherMode: int = Form(...), accessToken: str = Form(None), db: Session = Depends(get_db)):
+async def cipherActivity(inputText: str = Form(...), cipherAlgo: int = Form(...), key: str = Form(...), cipherMode: int = Form(...), user_id=Depends(RequiredLogin()), db: Session = Depends(get_db)):
 
     contents = ""
 
@@ -124,7 +121,6 @@ async def cipherActivity(inputText: str = Form(...), cipherAlgo: int = Form(...)
     print(f"cipher algo: {cipherAlgo}")
     print(f"key: {key}")
     print(f"cipherMode : {cipherMode}")
-    print(f"accessToken : {accessToken}")
 
     contents = inputText
     print(f"content: {contents}")
@@ -158,12 +154,9 @@ async def cipherActivity(inputText: str = Form(...), cipherAlgo: int = Form(...)
         else:
             output = rc4_decrypt(contents, key)
 
-    if accessToken is not None and accessToken != "null":
-        print(f"accessToken: {accessToken}")
-        user_id = get_current_user_id(accessToken)
-        print(f"user_id: {user_id}")
-        db_cipher_activity = crud.create_cipher_activity(db, contents, cipher_algo_arr[cipherAlgo-1], cipher_mode_arr[cipherMode-1], key, user_id)
-        print(f"cipher_activity: {db_cipher_activity}")
+    print(f"user_id: {user_id}")
+    db_cipher_activity = crud.create_cipher_activity(db, contents, cipher_algo_arr[cipherAlgo-1], cipher_mode_arr[cipherMode-1], key, user_id)
+    print(f"cipher_activity: {db_cipher_activity}")
 
     print(f"output: {output}")
     return output

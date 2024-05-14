@@ -82,6 +82,7 @@ const Cipher = () => {
                 const response = await axios.post("http://127.0.0.1:8000/cipheractivity/file", formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
+                        "Authorization": `Bearer ${accessToken}`
                     },
                 });
                 console.log('Response from the backend:', response.data);
@@ -126,6 +127,7 @@ const Cipher = () => {
                 const response = await axios.post("http://127.0.0.1:8000/cipheractivity/inputText", formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",
+                        "Authorization": `Bearer ${accessToken}`
                     },
                 });
                 console.log('Response from the backend:', response.data);
