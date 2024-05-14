@@ -123,7 +123,6 @@ const Cipher = () => {
             }
 
             try {
-                // const response = await axios.post("http://127.0.0.1:8000/cipheractivity");
                 const response = await axios.post("http://127.0.0.1:8000/cipheractivity/inputText", formData, {
                     headers: {
                         "Content-Type": "multipart/form-data",

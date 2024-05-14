@@ -7,6 +7,7 @@ from . import crud, models, schemas
 from .authentication import *
 from .database import SessionLocal, engine
 from .cipher_utils import simple_substitution_decrypt, simple_substitution_encrypt, double_transposition_decrypt, double_transposition_encrypt, rc4_decrypt, rc4_encrypt
+import re
 
 models.Base.metadata.create_all(bind=engine)
 
@@ -30,10 +31,21 @@ def get_db():
     finally:
         db.close()
 
+USERNAME_PATTERN = r"^[a-zA-Z0-9_-]+$"
+EMAIL_PATTERN = r"^[^\s@]+@[^\s@]+\.[^\s@]+$"
+
 @app.post("/signup", response_model=schemas.User)
 def create_user(user: schemas.UserCreate, db: Session = Depends(get_db)):
     db_user_by_username = crud.get_user_by_username(db, username=user.username)
     db_user_by_email = crud.get_user_by_email(db, email=user.email)
+    if not re.match(USERNAME_PATTERN, user.username):
+        raise HTTPException(status_code=400, detail="Username can only contain English letters (capitalized or not), digits, '_', and '-'")
+    if not re.match(EMAIL_PATTERN, user.email):
+        raise HTTPException(status_code=400, detail="Please enter a valid email address")
+    if len(user.username.strip()) < 3:
+        raise HTTPException(status_code=400, detail="Username must be at least 3 characters long")
+    if len(user.password.strip()) < 8:
+        raise HTTPException(status_code=400, detail="Password must be at least 8 characters long")
     if db_user_by_email or db_user_by_username:
         raise HTTPException(status_code=400, detail="Email or username already registered")
     return crud.create_user(db=db, user=user)
