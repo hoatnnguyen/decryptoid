@@ -67,10 +67,10 @@ const Cipher = () => {
                 "cipherMode",
                 cipherMode
             )
-            formData.append(
-                "accessToken",
-                accessToken
-            )
+            // formData.append(
+            //     "accessToken",
+            //     accessToken
+            // )
 
             console.log("FormData content:");
             for (const pair of formData.entries()) {
@@ -112,10 +112,10 @@ const Cipher = () => {
                 "cipherMode",
                 cipherMode
             )
-            formData.append(
-                "accessToken",
-                accessToken
-            )
+            // formData.append(
+            //     "accessToken",
+            //     accessToken
+            // )
 
             console.log("FormData content:");
             for (const pair of formData.entries()) {
